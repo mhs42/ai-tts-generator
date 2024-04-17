@@ -3,6 +3,8 @@ from flask_cors import CORS, cross_origin
 import replicate
 from os import environ
 from flask_pymongo import PyMongo
+
+from dotenv import load_dotenv
 # import io
 # from getpass import getpass
 # from pydub.playback import play
@@ -12,7 +14,8 @@ from flask_pymongo import PyMongo
 
 
 
-
+# path=find_dotenv()
+load_dotenv()
 
 
 
@@ -25,7 +28,9 @@ app = Flask(
 
 cors = CORS(app)
 
-REPLICATE_API_TOKEN = "r8_A96aHaaCnBVhHXC77p8it3vkw5lb7zI1kNpgk"
+REPLICATE_API_TOKEN = environ.get('key')
+print(REPLICATE_API_TOKEN)
+# print (os.environ)
 environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
 
