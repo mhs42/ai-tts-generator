@@ -142,6 +142,7 @@ const FormHeader = props => (
 const Form = (props) => {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
 
@@ -169,9 +170,14 @@ const Form = (props) => {
     setPassword2(event.target.value);
   };
 
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
   return (
    <span>
      <FormInput description="Username" placeholder="Enter your username" type="text" value={username} onChange={handleUsernameChange}/>
+     <FormInput description="Email" placeholder="Enter your email" type="text" value={email} onChange={handleEmailChange}/>
      <FormInput description="Name" placeholder="Enter your name" type="text"  value={name} onChange={handleNameChange}/>
      <FormInput description="Password" placeholder="Enter your password" type="password"  value={password} onChange={handlePasswordChange}/>
      <FormInput description="Re-Enter Password" placeholder="Re-enter your password" type="password"  value={password2} onChange={handlePassword2Change}/>
