@@ -74,7 +74,7 @@ const Signup = (props) => {
         console.log("Password error")
         return;
       }
-      const response = await axios.post("https://ai-tts-generator-2.onrender.com/signup", { username, name, password });
+      const response = await axios.post("http://127.0.0.1:5000/signup", { username, name, password });
       if (response.data.message === "Success") {
         alert("User Created");
         navigate("/login")
@@ -97,7 +97,7 @@ const Signup = (props) => {
 
     // Continue with signup process
     try {
-      const response = await axios.post("https://ai-tts-generator-2.onrender.com/signup", { username, password });
+      const response = await axios.post("http://127.0.0.1:5000/signup", { username, password });
       setCookies(response.data.token);
       window.localStorage.setItem("User_ID", response.data.userID);
       console.log(response.data.userID);

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request,jsonify
 from flask_cors import CORS, cross_origin
 import replicate
 from os import environ
@@ -25,7 +25,7 @@ app = Flask(
 
 cors = CORS(app)
 
-REPLICATE_API_TOKEN = "r8_K1cFQOLKUuw9nzTzc6HeRWHbtDkRSFP0JNUHl"
+REPLICATE_API_TOKEN = "r8_A96aHaaCnBVhHXC77p8it3vkw5lb7zI1kNpgk"
 environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
 
@@ -113,6 +113,41 @@ def receive_text():
     elif request.method == "GET":
         return "This is the GET endpoint. Send a POST request with JSON data."
 
+
+@app.route("/login", methods=["POST"])
+@cross_origin()
+def login():
+    # Logic to handle login request
+    # Retrieve data from request
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    
+    # Query MongoDB to check if user exists and credentials are correct
+    user = mongo.db.users.find_one({"username": username, "password": password})
+    if user:
+        return jsonify({"message": "Login successful", "user": user}), 200
+    else:
+        return jsonify({"error": "invalid"}), 401
+
+@app.route("/signup", methods=["POST"])
+@cross_origin()
+def signup():
+    # Logic to handle signup request
+    # Retrieve data from request
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    
+    # Check if user already exists
+    existing_user = mongo.db.users.find_one({"username": username})
+    if existing_user:
+        return jsonify({"error": "Username already exists"}), 400
+    
+    # Add user to MongoDB
+    new_user = {"username": username, "password": password}
+    mongo.db.users.insert_one(new_user)
+    return jsonify({"message": "Success"}), 201
 
 # # Running app
 if __name__ == "__main__":
