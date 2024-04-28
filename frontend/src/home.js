@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import { useSound } from "use-sound";
 import axios from "axios";
 import Select from "react-tailwindcss-select";
@@ -18,16 +19,35 @@ const Home = () => {
     audioKey: 0,
   });
 
+  const navigate = useNavigate();
+
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is signed in when the component mounts
+    const signedIn = sessionStorage.getItem("isSignedIn");
+    setIsSignedIn(signedIn === "true");
+  
+    // Redirect to login page if not signed in
+    if (signedIn !== "true") {
+      alert(`You are not signed in`)
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const handleSignIn = () => {
     // Logic to sign in the user
     setIsSignedIn(true);
+    sessionStorage.setItem("isSignedIn", "true");
+    navigate("/login", { state: {} });
   };
 
   const handleSignOut = () => {
     // Logic to sign out the user
     setIsSignedIn(false);
+    sessionStorage.setItem("isSignedIn", "false");
+    navigate("/login", { state: {} });
+
   };
 
   const [play] = useSound(state.src, { playbackRate: state.pitch });
@@ -217,6 +237,7 @@ const Home = () => {
             <button onClick={handleSignIn}>Sign In</button>
           )}
         </div>
+        {isSignedIn ? (
         <div className="row">
           <div className="col-3 ml-12" style={{  }}>
             <img src="/hero.gif" className="ml-12 rounded-2xl" alt="" srcset="" />
@@ -226,6 +247,9 @@ const Home = () => {
             <p className="mt-1 text-center text-base text-gray-300" style={{ }}>This is an AI text-to-speech generator that generates audio from text. You can adjust the pitch, rate, speaker.</p>
           </div>
         </div>
+        ) : (
+          <div className="text-center mt-5 text-red-500 font-semibold">Unauthorized access. Please login to continue.</div>
+        )}
         <div className="flex space-x-6">
           <div className="w-full">
             <div>

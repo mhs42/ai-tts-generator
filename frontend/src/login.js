@@ -19,26 +19,22 @@ const Login = (props) => {
     console.log("The form was submitted with the following data:");
     console.log({ username, password });
 
-    if(username === "Admin"){
-      console.log("Admin is");
-      navigate("/home");
-    }
+
 
     try {
-      const response=await axios.post("https://serene-mountain-32649-85f8ea374f65.herokuapp.com/login", { username, password });
+      const response=await axios.post("http://127.0.0.1:5000/login", { username, password });
      
-      setCookies(response.data.token);
-      window.localStorage.setItem("User_ID", response.data.userID);
+
 
       console.log(response.data.message);
 
-      if(username === "Admin"){
-        console.log("Admin is");
-        navigate("/home");
-      }
 
-      else if(response.data.message !== "invalid"){
+
+      if(response.data.message !== "invalid"){
         navigate("/home", { state: {username} });
+        setCookies(response.data.token);
+        window.sessionStorage.setItem("User_ID", response.data.userID);
+        window.sessionStorage.setItem("isSignedIn", "true");
       }
       else{
         alert("invalid Credentials, Please try again later")
