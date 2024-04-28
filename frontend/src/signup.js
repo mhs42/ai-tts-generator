@@ -74,7 +74,7 @@ const Signup = (props) => {
         console.log("Password error")
         return;
       }
-      const response = await axios.post("http://127.0.0.1:5000/signup", { username, name, password });
+      const response = await axios.post("https://serene-mountain-32649-85f8ea374f65.herokuapp.com/signup", { username, name, password });
       if (response.data.message === "Success") {
         alert("User Created");
         navigate("/login")
