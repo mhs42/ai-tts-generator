@@ -22,6 +22,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [generationsLeft, setGenerationsLeft] = useState(isSignedIn ? 20 : 3);
+  const maxLength = (isSignedIn) ? 50 : 25;
 
   useEffect(() => {
     // Check if the user is signed in when the component mounts
@@ -183,6 +185,7 @@ const Home = () => {
         audioKey: prevState.audioKey + 1,
       }));
 
+      setGenerationsLeft(generationsLeft - 1);
       play({ playbackRate: state.pitch });
 
     } catch (error) {
@@ -190,6 +193,7 @@ const Home = () => {
     }
   };
 
+  const isSubmitDisabled = generationsLeft <= 0;
   const { text, pitch, rate, waveform, language, speaker, selectedGender, src, audioKey } = state;
 
   const languageOptions = [
@@ -261,11 +265,15 @@ const Home = () => {
                 color: "rgb(255, 255, 255)",
               }}
               value={text}
+              maxlength={maxLength}
               onChange={handleChange}
             />
 
             <div className="text-sm my-3">
-              Character count: {text.length}
+              Character count: {text.length} / {maxLength}
+            </div>
+            <div className="text-sm my-3">
+              Audio generations reamining: {generationsLeft}
             </div>
           </div>
           </div>
@@ -364,7 +372,7 @@ const Home = () => {
                 Emphasize
               </button>
 
-              <button className="bg-blue-500 shadow-xl  shadow-blue-500/50 ml-4 py-2 px-10 rounded-lg text-white font-semibold" onClick={handleSubmit}>
+              <button className="bg-blue-500 shadow-xl  shadow-blue-500/50 ml-4 py-2 px-10 rounded-lg text-white font-semibold" onClick={handleSubmit} disabled={isSubmitDisabled}>
                 Submit
               </button>
             </div>
