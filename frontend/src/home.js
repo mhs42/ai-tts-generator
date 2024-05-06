@@ -32,10 +32,10 @@ const Home = () => {
     setIsSignedIn(signedIn === "true");
   
     // // Redirect to login page if not signed in
-    // if (signedIn !== "true") {
-    //   alert(`You are not signed in`)
-    //   navigate("/login");
-    // }
+    if (signedIn !== "true" & generationsLeft === 0 ) {
+      alert(`You are not signed in`)
+      navigate("/login");
+    }
   }, [navigate]);
 
   const handleSignIn = () => {

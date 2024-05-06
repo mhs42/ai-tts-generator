@@ -98,7 +98,7 @@ const Signup = (props) => {
 
     // Continue with signup process
     try {
-      const response = await axios.post("http://127.0.0.1:5000/signup", { username, password });
+      const response = await axios.post("https://serene-mountain-32649-85f8ea374f65.herokuapp.com/signup", { username, password });
       setCookies(response.data.token);
       window.localStorage.setItem("User_ID", response.data.userID);
       console.log(response.data.userID);
