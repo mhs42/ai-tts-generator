@@ -2,6 +2,7 @@ import './signup.css';
 
 import { useNavigate, Link } from 'react-router-dom';
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import {useCookies} from 'react-cookie'
 
@@ -97,7 +98,7 @@ const Signup = (props) => {
 
     // Continue with signup process
     try {
-      const response = await axios.post("https://serene-mountain-32649-85f8ea374f65.herokuapp.com/signup", { username, password });
+      const response = await axios.post("http://127.0.0.1:5000/signup", { username, password });
       setCookies(response.data.token);
       window.localStorage.setItem("User_ID", response.data.userID);
       console.log(response.data.userID);
@@ -112,12 +113,14 @@ const Signup = (props) => {
 
 
   return (
-
-        <body class = "su-body">
+    <>
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
+      <body class = "su-body">
         <div class="split-left">
           <img src="/hero.gif" className="ml-12 rounded-2xl" alt="" srcset="" />
         </div>
-
         <div class="split-right">
           <div id="signupform">
             <br></br> 
@@ -125,9 +128,8 @@ const Signup = (props) => {
             <Form onClick={handleClick}/>
           </div>
         </div>
-                
-        </body>
-
+      </body>
+    </>
 ); 
 }
 

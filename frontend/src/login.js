@@ -2,6 +2,7 @@ import "./login.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+import { Helmet } from "react-helmet";
 import axios from "axios";
 import {useCookies} from 'react-cookie'
 
@@ -13,57 +14,57 @@ const Login = (props) => {
 
 
   const navigate = useNavigate();
-  const [,setCookies]=useCookies('access_token')
+  const [,setCookies] = useCookies("access_token");
 
   const handleClick = async (username, password) => {
     console.log("The form was submitted with the following data:");
     console.log({ username, password });
 
-
-
     try {
-      const response=await axios.post("https://serene-mountain-32649-85f8ea374f65.herokuapp.com/login", { username, password });
-     
-
-
+      const response = await axios.post("http://127.0.0.1:5000/login", { username, password });
       console.log(response.data.message);
 
-
-
-      if(response.data.message !== "invalid"){
+      if (response.data.message !== "invalid")
+      {
         navigate("/home", { state: {username} });
         setCookies(response.data.token);
         window.sessionStorage.setItem("User_ID", response.data.userID);
         window.sessionStorage.setItem("isSignedIn", "true");
       }
-      else{
-        alert("invalid Credentials, Please try again later")
+      else
+      {
+        alert("Invalid credentials, Please try again later");
       }
       
-    } catch (error) {
+    }
+    catch (error)
+    {
       console.log("An error occurred");
     }
   };
 
   return (
     <>
-    <head>
-    <link rel="icon" href={img} />
-    </head>
-    <body class="li-body">
-      <div id="loginform">
-        <br></br>
-        <img src={img} alt="PlanIt Pro logo" />
-        <FormHeader title="AI Text-to-Speech Generator" />
-        <Form onClick={handleClick} />
-        {/* <OtherMethods /> */}
-        <p> Forgot Password?</p>
-        <p>
-          {" "}
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
-      </div>
-    </body>
+      <head>
+        <link rel="icon" href={img} />
+      </head>
+      <Helmet>
+        <title>Sign In</title>
+      </Helmet>
+      <body class="li-body">
+        <div id="loginform">
+          <br></br>
+          <img src={img} alt="PlanIt Pro logo" />
+            <FormHeader title="AI Text-to-Speech Generator" />
+            <Form onClick={handleClick} />
+          {/* <OtherMethods /> */}
+          <p> Forgot Password?</p>
+          <p>
+            {" "}
+            Don't have an account? <Link to="/signup">Sign Up</Link>
+          </p>
+        </div>
+      </body>
     </>
   );
 };
