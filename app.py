@@ -31,7 +31,7 @@ cors = CORS(app)
 REPLICATE_API_TOKEN = environ.get('key')
 # print(REPLICATE_API_TOKEN)
 # print (os.environ)
-environ["REPLICATE_API_TOKEN"] = 'r8_9VhkST2IAJOUy3ciqDARFpXVMVPPPLE0FnK4N'
+environ["REPLICATE_API_TOKEN"] = REPLICATE_API_TOKEN
 
 app.config['MONG_DBNAME'] = 'TTS'
 app.config["MONGO_URI"] = "mongodb+srv://alikhansikandar007:sCRny95r8CS0vxfS@cluster0.xpits74.mongodb.net/TTS?retryWrites=true&w=majority"
