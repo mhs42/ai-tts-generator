@@ -27,16 +27,20 @@ const Home = () => {
 
   useEffect(() => {
 
-    // Check if the user is signed in when the component mounts
     const signedIn = sessionStorage.getItem("isSignedIn");
     setIsSignedIn(signedIn === "true");
+
+    if (signedIn === "true") {
+      setGenerationsLeft(20);
+    } else {
+      setGenerationsLeft(3);
+    }
   
-    // // Redirect to login page if not signed in
     if (signedIn !== "true" & generationsLeft === 0 ) {
-      alert(`You are not signed in`)
+      alert(`Please sign in to continue`)
       navigate("/login");
     }
-  }, [navigate]);
+  }, [navigate,generationsLeft]);
 
   const handleSignIn = () => {
     // Logic to sign in the user
