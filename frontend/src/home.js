@@ -27,6 +27,7 @@ const Home = () => {
 
   useEffect(() => {
 
+    // Check if the user is signed in when the component mounts
     const signedIn = sessionStorage.getItem("isSignedIn");
     setIsSignedIn(signedIn === "true");
 
@@ -206,12 +207,12 @@ const Home = () => {
             )}
           </div>
           <div className="row">
-            <div className="col-3 ml-12" style={{  }}>
-              <img src="/hero.gif" className="ml-12 rounded-2xl" alt="" srcset="" />
-            </div>
             <div className="col-6 ml-40 mt-5 mb-5" style={{ background: "rgb(13, 15, 18)" }}>
-              <h1 className="mt-5 text-center text-4xl text-gray-200 font-semibold" style={{  }}>AI Text-to-Speech Generator</h1>
-              <p className="mt-1 text-center text-base text-gray-300" style={{ }}>This is an AI text-to-speech generator that generates audio from text. You can adjust the pitch, rate, speaker.</p>
+              <h1 className="mt-5 text-center text-4xl text-gray-200 font-semibold">AI Text-to-Speech Generator</h1>
+              <p className="mt-1 text-center text-base text-gray-300">This is an AI text-to-speech generator that generates audio from text. You can adjust the pitch, rate, speaker.</p>
+            </div>
+            <div className="col-3 mr-12">
+              <img src="/hero.gif" className="mr-12 rounded-2xl" alt="" srcset="" />
             </div>
           </div>
           <div className="flex space-x-6">
