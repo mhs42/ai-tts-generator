@@ -21,9 +21,14 @@ const Home = () => {
   });
 
   const navigate = useNavigate();
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [generationsLeft, setGenerationsLeft] = useState(isSignedIn ? 20 : 3);
+  const signedIn = sessionStorage.getItem("isSignedIn");
+  const [isSignedIn, setIsSignedIn] = useState((signedIn === "true"));
+  const [generationsLeft, setGenerationsLeft] = useState((isSignedIn) ? 20 : 5);
   const maxLength = (isSignedIn) ? 50 : 25;
+
+
+
+
 
   useEffect(() => {
 
@@ -31,21 +36,19 @@ const Home = () => {
     const signedIn = sessionStorage.getItem("isSignedIn");
     setIsSignedIn(signedIn === "true");
 
-    if (signedIn === "true") {
-      setGenerationsLeft(20);
-    } else {
-      setGenerationsLeft(3);
-    }
-  
+
     if (signedIn !== "true" & generationsLeft === 0 ) {
       alert(`Please sign in to continue`)
       navigate("/login");
     }
   }, [navigate,generationsLeft]);
 
+
+  
+
   const handleSignIn = () => {
     // Logic to sign in the user
-    sessionStorage.setItem("isSignedIn", "true");
+    // sessionStorage.setItem("isSignedIn", "true");
     navigate("/login", { state: {} });
   };
 
@@ -146,7 +149,7 @@ const Home = () => {
         audioKey: prevState.audioKey + 1,
       }));
 
-      setGenerationsLeft(generationsLeft - 1);
+      setGenerationsLeft(prevGenerationsLeft => prevGenerationsLeft - 1);
       play({ playbackRate: state.pitch });
 
     } catch (error) {
